@@ -2,7 +2,8 @@
 class Skarbonka(object):
     def __init__(self):
         print('created!')
-        self.ammount=0
+        self.cashInMashine=0
+        self.OrderCash=0
         self.bilonAmmount={}
         self.bilonAmmount[0.01]=0
         self.bilonAmmount[0.02]=0
@@ -31,8 +32,12 @@ class Skarbonka(object):
             raise ValueError()
         self.bilonAmmount[key]-=1
         self.ammount-=key
-    def GetAmmount(self):
-        return self.ammount
+    def GetCashInMashine(self):
+        return self.cashInMashine
+    def GetOrderCash(self):
+        return self.OrderCash
+    def EndOrder(self):
+        self.OrderCash=0
 
 
 

@@ -1,9 +1,14 @@
-import numpy as np
-import random
-import time
-import monety
-maszyna=monety.Skarbonka()
-maszyna.ThrowMoney(0.01)
-maszyna.ThrowMoney(0.01)
-maszyna.GiveBack(0.01)
-maszyna.GiveBack(0.10)
+from tkinter import *
+from Window import Application
+
+def main():
+    try:
+        root = Tk()
+        app = Application(master=root)
+        root.resizable(width=False, height=False)
+        app.mainloop()
+    except:
+        print("Błąd w module main!!\nTworzenie okna głównego ")
+
+if __name__=="__main__":
+    main()
