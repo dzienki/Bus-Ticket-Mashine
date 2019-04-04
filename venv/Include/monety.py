@@ -1,13 +1,9 @@
 
 class Skarbonka(object):
     def __init__(self):
-        print('created!')
         self.cashInMashine=0
         self.OrderCash=0
         self.bilonAmmount={}
-        self.bilonAmmount[0.01]=0
-        self.bilonAmmount[0.02]=0
-        self.bilonAmmount[0.05]=0
         self.bilonAmmount[0.1]=0
         self.bilonAmmount[0.2]=0
         self.bilonAmmount[0.5]=0
@@ -18,11 +14,9 @@ class Skarbonka(object):
         self.bilonAmmount[20]=0
         self.bilonAmmount[50]=0
         self.bilonAmmount[100]=0
-        self.bilonAmmount[200]=0
-        self.bilonAmmount[500]=0
     def ThrowMoney(self,key):
         self.bilonAmmount[key]+=1
-        self.ammount+=key
+        self.OrderCash+=key
     def GiveBack(self,key):
         if self.bilonAmmount[key]<=0:
             print("Brak Monet! o nominale: ", key)
@@ -31,11 +25,13 @@ class Skarbonka(object):
             print("Error")
             raise ValueError()
         self.bilonAmmount[key]-=1
-        self.ammount-=key
+        self.OrderCash-=key
     def GetCashInMashine(self):
         return self.cashInMashine
     def GetOrderCash(self):
         return self.OrderCash
+    def SetOrderCash(self,temp):
+        self.OrderCash=temp
     def EndOrder(self):
         self.OrderCash=0
 
