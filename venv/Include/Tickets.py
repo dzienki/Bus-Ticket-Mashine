@@ -1,5 +1,6 @@
 class Tickets:
     def __init__(self):
+        self.priceToPay=0
         self.tickets={}
         self.tickets[2.80]="Bilet normalny 20 min"
         self.tickets[1.40]="Bilet ulgowy 20 min"
@@ -12,4 +13,11 @@ class Tickets:
         self.tickets[24.00]="Bilet normalny 48h"
         self.tickets[12.00]="Bilet ulgowy 48h"
         self.boughtTickets=[]
-
+    def addTickets(self,key):
+        self.boughtTickets.append(key)
+        self.priceToPay+=key
+        return self.tickets[key]+"\n"
+    def delTicket(self):
+        tmp=self.boughtTickets.pop()
+        self.priceToPay-=tmp
+        return tmp

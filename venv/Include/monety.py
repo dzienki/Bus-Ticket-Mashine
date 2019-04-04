@@ -34,7 +34,8 @@ class Skarbonka(object):
         self.OrderCash=temp
     def EndOrder(self):
         self.OrderCash=0
-
+    def Canwithdraw(self):
+        return True
 
 
 
