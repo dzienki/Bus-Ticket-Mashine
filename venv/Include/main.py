@@ -1,12 +1,16 @@
+# coding=utf-8
 from tkinter import *
-from Window import Application
+from Window import *
 
 
 def main():
-    root = Tk()
-    app = Application(master=root)
-    root.resizable(width=False, height=False)
-    app.mainloop()
+    try:
+        root = Tk()
+        app = Application(master=root)
+        root.resizable(width=False, height=False)
+        app.mainloop()
+    except:
+        popupmsg("Błąd\ntworzenia \nw main")
 
-
-main()
+if __name__=="__main__":
+    main()

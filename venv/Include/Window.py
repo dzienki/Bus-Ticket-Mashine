@@ -1,6 +1,8 @@
+# coding=utf-8
 from tkinter import *
 from monety import *
 from Tickets import *
+from popoutmsg import *
 
 
 class Application(Frame, Skarbonka, Bilety):
@@ -100,35 +102,39 @@ class Application(Frame, Skarbonka, Bilety):
 
         # Przyciski z monetami
         b_money010 = Button(moneyFrame1, image=self.photo4, overrelief=SUNKEN,
-                            command=lambda: (self.ThrowMoney(0.1), self.write("")))
+                            command=lambda: (self.ThrowMoney(0.1,w.get()), self.write("")))
         b_money010.pack(anchor=N)
         b_money020 = Button(moneyFrame1, image=self.photo5, overrelief=SUNKEN,
-                            command=lambda: (self.ThrowMoney(0.2), self.write("")))
+                            command=lambda: (self.ThrowMoney(0.2,w.get()), self.write("")))
         b_money020.pack(anchor=N)
         b_money050 = Button(moneyFrame1, image=self.photo6, overrelief=SUNKEN,
-                            command=lambda: (self.ThrowMoney(0.5), self.write("")))
+                            command=lambda: (self.ThrowMoney(0.5,w.get()), self.write("")))
         b_money050.pack(anchor=N)
         b_money100 = Button(moneyFrame2, image=self.photo7, overrelief=SUNKEN,
-                            command=lambda: (self.ThrowMoney(1), self.write("")))
+                            command=lambda: (self.ThrowMoney(1,w.get()), self.write("")))
         b_money100.pack(anchor=N)
         b_money200 = Button(moneyFrame2, image=self.photo8, overrelief=SUNKEN,
-                            command=lambda: (self.ThrowMoney(2), self.write("")))
+                            command=lambda: (self.ThrowMoney(2,w.get()), self.write("")))
         b_money200.pack(anchor=N)
         b_money500 = Button(moneyFrame2, image=self.photo9, overrelief=SUNKEN,
-                            command=lambda: (self.ThrowMoney(5), self.write("")))
+                            command=lambda: (self.ThrowMoney(5,w.get()), self.write("")))
         b_money500.pack(anchor=N)
         b_money1000 = Button(moneyFrame1, image=self.photo1, overrelief=SUNKEN,
-                             command=lambda: (self.ThrowMoney(10), self.write("")))
+                             command=lambda: (self.ThrowMoney(10,w.get()), self.write("")))
         b_money1000.pack(anchor=N)
         b_money2000 = Button(moneyFrame1, image=self.photo2, overrelief=SUNKEN,
-                             command=lambda: (self.ThrowMoney(20), self.write("")))
+                             command=lambda: (self.ThrowMoney(20,w.get()), self.write("")))
         b_money2000.pack(anchor=N)
         b_money5000 = Button(moneyFrame2, image=self.photo3, overrelief=SUNKEN,
-                             command=lambda: (self.ThrowMoney(50), self.write("")))
+                             command=lambda: (self.ThrowMoney(50,w.get()), self.write("")))
         b_money5000.pack(anchor=N)
         b_money10000 = Button(moneyFrame2, image=self.photo10, overrelief=SUNKEN,
-                              command=lambda: (self.ThrowMoney(100), self.write("")))
+                              command=lambda: (self.ThrowMoney(100,w.get()), self.write("")))
         b_money10000.pack(anchor=N)
+        l= Label(moneyFrame1, text="Ilość Monet")
+        l.pack()
+        w = Spinbox(moneyFrame2, from_=1, to=100)
+        w.pack(anchor=N)
 
     def center(self):
         # centrowanie okna na ekranie
@@ -151,39 +157,24 @@ class Application(Frame, Skarbonka, Bilety):
 
     def buyViaCardm(self):
         if (self.GetOrderCash() > 0):
-            self.popupmsg("Wrzuciłeś\njuż\npieniądze")
+            popupmsg("Wrzuciłeś\njuż\npieniądze")
             return
         if (self.viewedText == ""):
-            self.popupmsg("Najpierw\nwybierz\nbilet")
+            popupmsg("Najpierw\nwybierz\nbilet")
             return
         self.priceToPay = 0.00
         self.viewedText = ""
         self.write("")
-        self.popupmsg("Zapłacono kartą!\n Dziękujemy!")
+        popupmsg("Zapłacono kartą!\n Dziękujemy!")
 
     def giveMoneyBack(self):
 
         if (self.GetOrderCash() == 0):
-            self.popupmsg("Nie\nwrzuciłeś\npieniedzy!")
+            popupmsg("Nie\nwrzuciłeś\npieniedzy!")
         self.EndOrder()
         self.write("")
-        self.popupmsg("Zabierz\nPieniądze")
+        popupmsg("Zabierz\nPieniądze")
 
-    def popupmsg(self, msg):
-        popup = Tk()
-        popup.wm_title("Informacja")
-        label = Label(popup, text=msg, font=("Verdana", 17))
-        popup.update_idletasks()
-        width = popup.winfo_width()
-        height = popup.winfo_height()
-        x = (popup.winfo_screenwidth() // 2) - (width // 2)
-        y = (popup.winfo_screenheight() // 2) - (height // 2)
-        popup.geometry('{}x{}+{}+{}'.format(width, height, x, y))
-        label.pack(side=TOP, fill=X)
-        B1 = Button(popup, text="Zamknij", font=("Verdana", 17), bg="#6d6e70", fg="red", height=2,
-                    command=popup.destroy)
-        B1.pack(side=BOTTOM, fill=X)
-        popup.mainloop()
 
     def AddTicket(self, key):
         self.viewedText += self.addTickets(key)
@@ -191,7 +182,7 @@ class Application(Frame, Skarbonka, Bilety):
 
     def deleteTicket(self):
         if (self.priceToPay == 0):
-            self.popupmsg("Nie\ndodałeś\nżadnego\nbiletu")
+            popupmsg("Nie\ndodałeś\nżadnego\nbiletu")
             return
         tmp = self.delTicket()
         self.viewedText = self.viewedText.replace(self.tickets[tmp] + "\n", "", 1)
@@ -200,9 +191,9 @@ class Application(Frame, Skarbonka, Bilety):
     def buyTickets(self):
         reszta=round(self.OrderCash-self.priceToPay,2)
         if self.viewedText== "":
-            self.popupmsg("Nie\nwybrałeś\nbiletu!")
+            popupmsg("Nie\nwybrałeś\nbiletu!")
         if self.GetOrderCash() < self.priceToPay:
-            self.popupmsg("Wrzuciłeś\nza mało\npieniędzy!")
+            popupmsg("Wrzuciłeś\nza mało\npieniędzy!")
         elif self.priceToPay == self.GetOrderCash():
             self.SetOrderCash(0.00)
             self.priceToPay = 0.00
@@ -210,7 +201,7 @@ class Application(Frame, Skarbonka, Bilety):
             self.write("")
             self.cashInMashine.clear()
             print(self.bilonAmmount)
-            self.popupmsg("Odbierz\nbilety!")
+            popupmsg("Odbierz\nbilety!")
         elif self.Canwithdraw(reszta):
             self.SetOrderCash(0.00)
             self.SetOrderCash(0.00)
@@ -218,8 +209,8 @@ class Application(Frame, Skarbonka, Bilety):
             self.viewedText = ""
             self.write("")
             print(self.bilonAmmount)
-            self.popupmsg("Odbierz\nbilety\ni resztę\n"+str(reszta)+"zł")
+            popupmsg("Odbierz\nbilety\ni resztę\n"+str(reszta)+"zł")
         else:
-            self.popupmsg("Wrzuć\nodliczoną\nkowtę!")
+            popupmsg("Wrzuć\nodliczoną\nkowtę!")
 
 

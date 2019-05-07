@@ -1,13 +1,23 @@
-class Skarbonka(object):
+from popoutmsg import *
+from imonety import *
+class Skarbonka(iSkarbonka):
     def __init__(self):
         self.cashInMashine= []
         self.OrderCash = 0
-        self.bilonAmmount = {100: 0, 50: 0, 20: 0, 10: 0, 5: 0, 2: 0, 1: 0, 0.5: 0, 0.2: 0, 0.1: 0}
+        #self.bilonAmmount = {100: 0, 50: 0, 20: 0, 10: 0, 5: 0, 2: 0, 1: 0, 0.5: 0, 0.2: 0, 0.1: 0}
+        self.bilonAmmount = {100: 3, 50: 3, 20: 3, 10: 3, 5: 4, 2: 5, 1: 5, 0.5: 4, 0.2: 4, 0.1: 4}
 
-    def ThrowMoney(self, key):
-        self.bilonAmmount[key] += 1
-        self.OrderCash += key
-        self.cashInMashine.append(key)
+
+    def ThrowMoney(self, key, amount):
+        try:
+            tmp=int(amount)
+        except ValueError:
+            popupmsg("To nie\nliczba!")
+        else:
+            for i in range(tmp):
+                self.bilonAmmount[key] += 1
+                self.OrderCash += key
+                self.cashInMashine.append(key)
 
     def GiveBack(self, key):
         if self.bilonAmmount[key] <= 0:
@@ -40,7 +50,7 @@ class Skarbonka(object):
         priceToPay = reszta
         tmpBillons = self.bilonAmmount
         for valueMoney in self.bilonAmmount:
-            tmp = priceToPay/valueMoney
+            tmp = int(priceToPay/valueMoney)
             if tmp >= 1:
                 if self.bilonAmmount[valueMoney] > 0:
                     tmp2 = self.bilonAmmount[valueMoney]

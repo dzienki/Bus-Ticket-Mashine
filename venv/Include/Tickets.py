@@ -1,4 +1,5 @@
-class Bilety(object):
+from iTickets import *
+class Bilety(iBilety):
     def __init__(self):
         self.priceToPay = 0
         self.tickets = {2.80: "Bilet normalny 20 min", 1.40: "Bilet ulgowy 20 min", 3.80: "Bilet normalny 40 min",
