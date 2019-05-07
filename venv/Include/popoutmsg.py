@@ -14,3 +14,8 @@ def popupmsg(msg):
                 command=popup.destroy)
     B1.pack(side=BOTTOM, fill=X)
     popup.mainloop()
+
+class Error(Exception):
+    pass
+class ValueTooSmall(Error):
+    pass

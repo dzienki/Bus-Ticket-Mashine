@@ -4,15 +4,19 @@ class Skarbonka(iSkarbonka):
     def __init__(self):
         self.cashInMashine= []
         self.OrderCash = 0
-        #self.bilonAmmount = {100: 0, 50: 0, 20: 0, 10: 0, 5: 0, 2: 0, 1: 0, 0.5: 0, 0.2: 0, 0.1: 0}
-        self.bilonAmmount = {100: 3, 50: 3, 20: 3, 10: 3, 5: 4, 2: 5, 1: 5, 0.5: 4, 0.2: 4, 0.1: 4}
+        self.bilonAmmount = {100: 0, 50: 0, 20: 0, 10: 0, 5: 0, 2: 0, 1: 0, 0.5: 0, 0.2: 0, 0.1: 0}
+        #self.bilonAmmount = {100: 3, 50: 3, 20: 3, 10: 3, 5: 4, 2: 5, 1: 5, 0.5: 4, 0.2: 4, 0.1: 4}
 
 
     def ThrowMoney(self, key, amount):
         try:
             tmp=int(amount)
+            if tmp<=0:
+                raise ValueTooSmall
+        except ValueTooSmall:
+            popupmsg("Wprowadz\nliczbe\ndodatnia")
         except ValueError:
-            popupmsg("To nie\nliczba!")
+            popupmsg("To nie\nliczba\ncalkowita!")
         else:
             for i in range(tmp):
                 self.bilonAmmount[key] += 1
@@ -43,7 +47,7 @@ class Skarbonka(iSkarbonka):
             tmp=self.cashInMashine.pop()
             self.bilonAmmount[tmp] -= 1
             self.OrderCash -= tmp
-        if self.OrderCash > 0:
+        if round(self.OrderCash,2) > 0:
             raise ValueError
 
     def Canwithdraw(self, reszta):
