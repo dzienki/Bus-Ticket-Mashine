@@ -2,6 +2,7 @@ from tkinter import *
 def popupmsg(msg):
     popup = Tk()
     popup.wm_title("Informacja")
+    popup.iconbitmap('images/alert.ico')
     label = Label(popup, text=msg, font=("Verdana", 17))
     popup.update_idletasks()
     width = popup.winfo_width()

@@ -12,6 +12,7 @@ class Application(Frame, Skarbonka, Bilety):
         Bilety.__init__(self)
         self.master = master
         self.pack()
+        master.iconbitmap('images/mobileMPK_ico.ico')
         self.inicializephoto()
         self.viewedText = ""
         self.create_widgets()
